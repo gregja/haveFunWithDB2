@@ -9,8 +9,16 @@ NB : DB2, DB2 Express C, DB2 for i, DB2 for Z/OS are trademarks of the IBM Compa
 Sometimes, there are some small differences of implementation between the different versions of DB2, differences that require adaptations of the SQL code.
 I try to identify them and report them when this happens.
 
-In the mandelbrot directory, you'll find a SQL query to draw the Mandelbrot Set (in french "Ensemble de Mandelbrot") in ASCII Art style. 
+List of directories :
+
+- tip01 : 
+
+Contains a SQL query to draw the Mandelbrot Set (in french "Ensemble de Mandelbrot") in ASCII Art style. 
 This query works fine with DB2 Express C and DB2 for i. I adapted for DB2 a query proposed in the official documentation of PostgreSQL. 
 This query contains several CTE (Common Table Expressions), it's a very good stuff, very interesting to learn and very powerful. 
+The adaptation for DB2 was pretty cool, but the ARRAY_AGG function used in the end of the PostgreSQL version doesn't exist on DB2. But I found an alternative solution using the LISTAGG function of DB2. 
+Probably the most interesting part of the query is the recursive CTE Z. Using a CROSS JOIN in a recursive CTE is not so usual... very interesting stuff.
+
+
 
 
