@@ -36,9 +36,10 @@ Zt (Ix, Iy, I) AS (
     ORDER BY Iy, Ix
 ),
 finale AS (
-	SELECT IY, LISTAGG(I, '') AS fractal
+	SELECT IY, LISTAGG(I, '') WITHIN GROUP(ORDER BY IX) AS fractal
 	FROM Zt
 	GROUP BY IY
 )
 SELECT fractal FROM finale
 ;
+
