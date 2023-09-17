@@ -4,11 +4,14 @@ This directory contains 2 SQL queries which are almost identical.
 
 Both are adaptations for DB2 of an SQL query written by Yaroslav Sergienko. This query is a mini 3D rendering engine, which draws a shape in an ASCII Art style.
 
+Link to the original version of Yaroslav Sergienko :
+https://observablehq.com/@pallada-92/sql-3d-engine
+
 One of the 2 queries is an adaptation I wrote for DB2 for LUW, and the other is for DB2 for i.
 Why 2 queries ? 
-Because I had difficulties to adapt, on DB2 for LUW, the CTE (Common Table Expression) "iters" which is a recursive CTE. ù
-However, this CTE works fine on DB2 for i. 
-The CTE "iters" is special because it uses a JOIN between the pseudo table "iters" and another CTE ("rays") 
+Because I had difficulties to adapt, on DB2 for LUW, the CTE (Common Table Expression) "iters" which is a recursive CTE. This CTE is special because it uses a JOIN between the pseudo table "iters" and another CTE ("rays") .
+
+The version of the CTE "iters" which works fine on DB2 for i :
 
 ```SQL
 iters (line, col, it, v) AS (
@@ -34,14 +37,15 @@ iters (line, col, it, v) AS (
 ),
 ```
 
-The code above doesn't work on DB2 for LUW. If you test it with DB2 for LUW, the SQL engine will return this error message :
+If you test the code above with DB2 for LUW, the SQL engine will return this error message :
 
 ```
 SQL Error [42836]: The FULLSELECT of the recursive common table expression "ITERS" must be the UNION of two or more FULLSELECT and cannot include a column function, a GROUP BY, HAVING or ORDER BY clause, or an explicit join with an ON clause.. SQLCODE=-345, SQLSTATE=42836, DRIVER=4.31.10
 ```
 
-On DB2 for LUW, I can't use a JOIN with the CTE "rays", so I found a workaround, using a group of scalar subqueries on the CTE "rays".  
-Here is a version of the recursive CTE "iters", which works on DB2 for LUW :
+On DB2 for LUW, I can't use a JOIN between the CTE "iters" and "rays", so I found a workaround, using a group of scalar subqueries on the CTE "rays". The result is not a pretty code, and it is certainly less efficient than the version for DB2... but it works.
+ 
+Here is the version of the recursive CTE "iters", which works on DB2 for LUW :
 
 ```SQL
 iters (ROW, col, it, v) AS
@@ -69,6 +73,3 @@ iters (ROW, col, it, v) AS
    WHERE it < 15
 ),
 ```
-
-This code is not pretty, and it is certainly less efficient than the version for DB2... but it works !! ;)
-
