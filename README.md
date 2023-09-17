@@ -15,6 +15,7 @@ For the tips which render in ASCII Art style, use a non-proportional font to dis
 List of tips :
 
 - tip01 : draw the Mandelbrot Set in ASCII Art style
+- tip02 : SQL 3d engine in ASCII Art style
 
 
 Links to download DB2 Express C (free) :
